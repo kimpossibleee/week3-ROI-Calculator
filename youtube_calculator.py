@@ -1,7 +1,7 @@
 from user import User
 from roi import RoiCalculator
 from youtube_api import CompareWithYoutuber
-from ascii import youtube
+from ascii import youtube, roi_art, scale
 from os import system, name
 
 def clear():
@@ -19,9 +19,10 @@ class YoutubeCalculator():
         my_user = User()
         my_user.sign_up()
         while self.is_on == True:
-            user_input = input('What would you like to do? 1) ROI calculator 2) Compare with another Youtuber 3) Quit [Enter the number] ')
+            user_input = input('\nWhat would you like to do? 1) ROI calculator 2) Compare with another Youtuber 3) Quit [Enter the number] ')
             clear()
             if user_input == '1':
+                print(roi_art)
                 roi_is_on = True
                 while roi_is_on:
                     user_calc = RoiCalculator()
@@ -39,6 +40,7 @@ class YoutubeCalculator():
                         else:
                             print('Enter a valid input.')
             elif user_input == '2':
+                print(scale)
                 user_compare = CompareWithYoutuber()
                 user_compare.grab_channel_views()
                 user_compare.comparison()

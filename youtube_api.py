@@ -24,7 +24,12 @@ class CompareWithYoutuber:
         self.your_views = 0
 
     def grab_channel_views(self):
-        self.channel_to_compare = input('Enter the exact channel id of the youtuber you want to compare yourself with: ')
+        try:
+            self.channel_to_compare = input('Enter the exact channel id of the youtuber you want to compare yourself with: ')
+        except ValueError as e:
+            print(f'{e}: Please enter digits only.')
+        if self.channel_to_compare == None:
+            self.grab_channel_views()
         self.youtuber_views = CallYoutubeAPI.call_yt_api(self, self.channel_to_compare)
         if self.youtuber_views == "Error":
             print("Could not retrieve viewcount. Please try a different channel.")

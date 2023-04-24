@@ -1,10 +1,10 @@
 class RoiCalculator:
     def __init__(self):
-        self.initial_investment = 0
+        self.initial_investment = None
         self.yt_inflow = 0
-        self.expenses = 0
+        self.expenses = None
         self.roi = 0
-        self.views = 0
+        self.views = None
         self.display = {
             'Inflow': {'YOUTUBE': 0},
             'Expenses': {},
@@ -12,17 +12,37 @@ class RoiCalculator:
         self.dollar_per_thousand_view_gross = 0
 
     def add_initial_investment(self):
-        self.initial_investment = float(input('What is your total initial investment? ie) cameras, video editing software: '))
+        try:
+            self.initial_investment = float(input('What is your total initial investment? ie) cameras, video editing software: '))
+        except ValueError as e:
+            print(f'{e}: Please enter digits only.')
+        if self.initial_investment == None:
+            self.add_initial_investment()
+
+
 
     def add_inflow(self):
-        inflow_amount = float(input('Input the total $$$ you cashed out from Youtube: '))
-        self.views = int(input('Input your total # of channel views: '))
+        try:
+            inflow_amount = float(input('Input the total $$$ you cashed out from Youtube: '))
+        except ValueError as e:
+            print(e)
+        try:
+            self.views = int(input('Input your total # of channel views: '))
+        except ValueError as e:
+            print(f'{e}: Please enter digits only.')
+        if self.views == None:
+            self.add_inflow()
         self.yt_inflow += inflow_amount
         self.display['Inflow']['YOUTUBE'] = self.display['Inflow']['YOUTUBE'] + inflow_amount
 
     def add_expenses(self):
-        expense_source = input('Input the name of your expense: ').upper()
-        expense_amount = float(input(f'Input the amount of "{expense_source}" expense: '))
+        try:
+            expense_source = input('Input the name of your expense: ').upper()
+            expense_amount = float(input(f'Input the amount of "{expense_source}" expense: '))
+        except ValueError as e:
+            print(f'{e}: Please enter digits only.')
+        if expense_amount == None:
+            self.add_expenses()
         self.expenses += expense_amount
         with open('day5/expenses.txt', 'w') as expenses:
             expenses.write(f'{expense_source}: {expense_amount:.2f}')
